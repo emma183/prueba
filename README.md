@@ -14,8 +14,6 @@ gatsby -- https://www.gatsbyjs.com/
 
 ## run proyect
 
-1.  **Gatsby site.**
-
     1.- npm install -g gatsby-cli
 
     2.- clone de proyect https://github.com/emma183/prueba.git

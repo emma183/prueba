@@ -13,7 +13,7 @@ import {
   Button,
 } from "@material-ui/core";
 
-import { IVenues } from "../../pages/list";
+import { IVenues } from "../../pages/directory";
 import CardSkeleton from "./card-skeleton";
 import HeaderContainerDirectory from "./header-container-directory";
 import Category from "./category";

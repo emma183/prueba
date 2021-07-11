@@ -12,7 +12,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { IVenues } from "../../pages/list";
+import { IVenues } from "../../pages/directory";
 import { Close } from "@material-ui/icons";
 
 interface IModalActivatedCardProps {
@@ -47,7 +47,6 @@ const ModalActivated: FC<IModalActivatedCardProps> = (
   const classes = useStyles();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  console.log("isDetail", isDetail);
   return (
     <Dialog
       fullWidth
@@ -76,7 +75,7 @@ const ModalActivated: FC<IModalActivatedCardProps> = (
             ))}
         </Box>
         <Grid container justify="flex-end" className={classes.buttonsWrapper}>
-          <Button variant="outlined" color="secondary" onClick={onClose}>
+          <Button variant="outlined" color="primary" onClick={onClose}>
             Cancelar
           </Button>
         </Grid>

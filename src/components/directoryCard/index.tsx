@@ -1,3 +1,4 @@
+import Alert from "@material-ui/lab/Alert";
 import React, { FC } from "react";
 import {
   Box,
@@ -7,12 +8,15 @@ import {
   CardMedia,
   makeStyles,
   Typography,
+  Tooltip,
+  CardActions,
+  Button,
 } from "@material-ui/core";
 
 import { IVenues } from "../../pages/list";
 import CardSkeleton from "./card-skeleton";
 import HeaderContainerDirectory from "./header-container-directory";
-
+import Category from "./category";
 interface IDataDirectory {
   name: string;
   venues: IVenues[];
@@ -26,6 +30,7 @@ interface IDataDirectory {
   dv_category: string;
   dv_address: string;
   isValidating: boolean;
+  onClick: ([]) => void;
 }
 
 const useStyles = makeStyles({
@@ -46,12 +51,16 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     color: "#001B69",
   },
-  fontBoldState: {
-    marginRight: 65,
+  fontBoldSubtitle: {
+    color: "#1FB8FB",
   },
   containerFlex: {
     display: "flex",
     flexDirection: "row",
+  },
+  cardActions: {
+    marginTop: 30,
+    justifyContent: "center",
   },
 });
 
@@ -69,38 +78,43 @@ const CardContainer: FC<IDataDirectory> = (props: IDataDirectory) => {
     media,
     name,
     venues,
+    onClick,
   } = props;
   const classes = useStyles();
-  var date = new Date(created * 1000);
-  const convert = str => {
-    var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
-  };
 
-  if (props.isValidating) return <CardSkeleton />;
+  if (isValidating === true) return <CardSkeleton />;
   return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia className={classes.media} image={media} title={name} />
-        <CardContent>
-          <Typography
-            className={classes.cardWrapper}
-            gutterBottom
-            variant="body1"
-          >
-            {name}
-          </Typography>
-          <Box>
-            <HeaderContainerDirectory
-              created={created}
-              dv_address={dv_address}
-            />
-          </Box>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <Tooltip
+      placement="top-start"
+      title={<Alert severity="info">CashBack del {dv_cashback}</Alert>}
+    >
+      <Card className={classes.root}>
+        <CardActionArea>
+          <CardMedia className={classes.media} image={media} title={name} />
+          <CardContent>
+            <Typography
+              className={classes.cardWrapper}
+              gutterBottom
+              variant="body1"
+            >
+              {name}
+            </Typography>
+            <Box>
+              <HeaderContainerDirectory
+                created={created}
+                dv_address={dv_address}
+              />
+              <Category dv_category={dv_category} />
+            </Box>
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={classes.cardActions}>
+          <Button onClick={() => onClick(venues)} size="small" color="primary">
+            Detalle
+          </Button>
+        </CardActions>
+      </Card>
+    </Tooltip>
   );
 };
 

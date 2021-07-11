@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import useSWR from "swr";
-import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Box, Grid, makeStyles } from "@material-ui/core";
 
-import DashboardLayout from "../../components/layout";
-import Seo from "../../components/seo";
 import CardContainer from "../../components/directoryCard";
+import DashboardLayout from "../../components/layout";
 import Footer from "../../components/directoryCard/footer";
-
+import Seo from "../../components/seo";
+import ModalActivated from "../../components/modalDetailDirectory";
 const useStyles = makeStyles({
   boxContainer: {
     marginTop: 30,
@@ -48,9 +48,11 @@ interface IResponseDirectory {
   data: IDataDirectory[];
 }
 
-const IndexPage = () => {
+const ListView = () => {
   const classes = useStyles();
   const [pageIndex, setPageIndex] = useState(1);
+  const [isViewDetail, setIsViewDetail] = useState(false);
+  const [isDetail, setIsDetail] = useState<IVenues[] | null>(null);
 
   const {
     data: user,
@@ -59,12 +61,14 @@ const IndexPage = () => {
   } = useSWR<IResponseDirectory>(
     `https://e6di35qzm7.execute-api.us-west-2.amazonaws.com/latest/directory?p=${pageIndex}`
   );
-  console.log("Ocurrio un error", error);
+  const handleOnCancel = (): void => {
+    setIsViewDetail(false);
+  };
   return (
     <DashboardLayout>
       <Seo title="Directorios" />
       <Box className={classes.boxContainer}>
-        <Grid container>
+        <Grid container spacing={1}>
           {user &&
             user.data.map((directory, i) => (
               <Grid item xs={12} md={2}>
@@ -81,11 +85,21 @@ const IndexPage = () => {
                   dv_address={directory.dv_address}
                   cashback_decimal={directory.cashback_decimal}
                   created={directory.created}
+                  onClick={values => {
+                    setIsViewDetail(true), setIsDetail(values);
+                  }}
                 />
               </Grid>
             ))}
         </Grid>
       </Box>
+      {isViewDetail && isDetail && (
+        <ModalActivated
+          onClose={handleOnCancel}
+          isOpen={isViewDetail}
+          isDetail={isDetail}
+        />
+      )}
       <Footer
         onPrevious={() => setPageIndex(pageIndex - 1)}
         onNext={() => setPageIndex(pageIndex + 1)}
@@ -95,4 +109,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default ListView;

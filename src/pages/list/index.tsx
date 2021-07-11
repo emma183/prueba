@@ -1,25 +1,28 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import React, { useState } from "react";
+import useSWR from "swr";
+import { Typography } from "@material-ui/core";
 
-import Layout from "../../components/layout"
-import Seo from "../../components/seo"
+import DashboardLayout from "../../components/layout";
+import Seo from "../../components/seo";
 
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Nueva página" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["AUTO", "WEBP", "AVIF"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
-  </Layout>
-)
+const IndexPage = () => {
+  const [pageIndex, setPageIndex] = useState(0);
 
-export default IndexPage
+  const { data: user } = useSWR(
+    `https://e6di35qzm7.execute-api.us-west-2.amazonaws.com/latest/directory?p=${pageIndex}`
+  );
+
+  return (
+    <DashboardLayout>
+      <Seo title="Nueva página" />
+      {user &&
+        user.data.map((notification, i) => (
+          <Typography>{notification.name} </Typography>
+        ))}
+      <button onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+      <button onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+    </DashboardLayout>
+  );
+};
+
+export default IndexPage;

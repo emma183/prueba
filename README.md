@@ -1,6 +1,6 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <h1 align="center">
-  Gatsby's default starter
+  Prueba Reworth
 </h1>
 ## 🚀 Quick start
 

@@ -18,10 +18,14 @@ gatsby -- https://www.gatsbyjs.com/
 
     1.- npm install -g gatsby-cli
 
-    2.- yarn install
+    2.- clone de proyect https://github.com/emma183/prueba.git
 
-    3.- yarn start
+    3.- open with your IDE
 
-    4.- localhost:8000/directory
+    4.- yarn install
+
+    5.- yarn start
+
+    6.- localhost:8000/directory
 
 <!-- AUTO-GENERATED-CONTENT:END -->

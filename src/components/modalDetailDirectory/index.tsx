@@ -29,6 +29,17 @@ const useStyles = makeStyles(theme => ({
     fontSize: 18,
     fontWeight: 700,
   },
+  containerDetail: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  fontBold: {
+    fontWeight: "bold",
+    color: "#001B69",
+  },
+  textAddress: {
+    marginRight: 65,
+  },
   buttonsWrapper: {
     "& button": {
       marginRight: "1.5rem",
@@ -71,7 +82,16 @@ const ModalActivated: FC<IModalActivatedCardProps> = (
         <Box>
           {isDetail &&
             isDetail.map((venues, i) => (
-              <Typography>{venues.address}</Typography>
+              <Box className={classes.containerDetail}>
+                <Box className={classes.textAddress}>
+                  <Typography className={classes.fontBold} variant="body2">
+                    Nombre: {venues.name}
+                  </Typography>
+                </Box>
+                <Typography className={classes.fontBold}>
+                  Direccion: {venues.address}
+                </Typography>
+              </Box>
             ))}
         </Box>
         <Grid container justify="flex-end" className={classes.buttonsWrapper}>

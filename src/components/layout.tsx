@@ -6,6 +6,8 @@ import {
   Typography,
   Toolbar,
 } from "@material-ui/core";
+import { CssBaseline, createTheme, ThemeProvider } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,19 +48,32 @@ interface IDashboardLayoutProps {
 
 const DashboardLayout = ({ children }: IDashboardLayoutProps) => {
   const classes = useStyles();
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          type: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode]
+  );
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar} position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Reworth
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      {children}
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className={classes.root}>
+        <AppBar className={classes.appBar} position="static">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              Reworth
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+        {children}
+      </div>
+    </ThemeProvider>
   );
 };
 

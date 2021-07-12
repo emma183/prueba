@@ -26,4 +26,6 @@ gatsby -- https://www.gatsbyjs.com/
 
     6.- localhost:8000/directory
 
+    7.- use dark mode by changing the dark mode of your system
+
 <!-- AUTO-GENERATED-CONTENT:END -->
